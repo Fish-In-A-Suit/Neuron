@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This shape is used as a container inside the main activity to separate map, profile, etc -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/main_foreground_rounded_rectangle_default"/>
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/main_foreground_rounded_rectangle_clicked"/>
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+</selector>

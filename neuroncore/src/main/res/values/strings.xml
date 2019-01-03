@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">neuroncore</string>
+
+    <string name="error_invalid_length">Invalid length!</string>
+    <string name="error_invalid_character">Invalid character!</string>
+    <string name="error_sex_unspecified">Sex not specified!</string>
+    <string name="password_dont_match">The passwords specified do not match!</string>
+
+    <string name="error_invalid_email">The specified email is invalid! It must contain an @ symbol.</string>
+    <string name="error_invalid_day">There are only 31 days in a month!</string>
+    <string name="error_first_name_invalid_character">First name can contain only letters!</string>
+    <string name="error_first_name_invalid_length">The specified first name is too short!</string>
+    <string name="error_last_name_invalid_character">Last name can contain only letters!</string>
+    <string name="error_last_name_invalid_length">The specified last name is too short!</string>
+    <string name="error_username_invalid_length">Username too short. Minimum allowed length is three characters.</string>
+    <string name="error_username_invalid_character">Username can contain only letters, numbers, underscores and hyphens.</string>
+    <string name="error_username_already_taken">This username has already been taken!</string>
+    <string name="error_password_invalid_length">This password is too short. Minimum length allowed is six characters.</string>
+    <string name="error_password_no_match">The specified passwords do not match!</string>
+</resources>

@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Multiverse</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="login_email_field_hint">example.example@gmail.com</string>
+    <string name="login_password_field_hint">●●●●●●●</string>
+    <string name="login_loginbutton_text">Sign in</string>
+    <string name="login_registerbutton_text">REGISTER</string>
+    <string name="login_googlebuttonlogin_text">GOOGLE</string>
+
+    <string name="register_register">REGISTER</string>
+    <string name="register_first_name">FIRST NAME</string>
+    <string name="register_last_name">LAST NAME</string>
+    <string name="register_username">USERNAME</string>
+    <string name="register_password">PASSWORD</string>
+    <string name="register_password_repeat">REPEAT PASSWORD</string>
+    <string name="register_email">EMAIL</string>
+    <string name="register_sex">SEX</string>
+    <string name="register_birthday">BIRTHDAY</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="month">MONTH</string>
+    <string name="day">DAY</string>
+    <string name="year">YEAR</string>
+    <string name="register_terms_and_privacy">Accept Terms of Service and Privacy Policy</string>
+
+
+    <string name="main_map_text">EXPLORE!</string>
+    <string name="main_profile_text">PROFILE</string>
+    <string name="main_inbox_text">INBOX</string>
+    <string name="main_settings_text">SETTINGS</string>
+    <string name="main_help_text">HELP</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_main">Map</string>
+    <string name="main_search">Search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

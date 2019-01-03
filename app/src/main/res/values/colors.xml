@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#303F9F</color>
+    <color name="error">#F17171</color>
+    <color name="gray_disabled">#747474</color>
+    <color name="transparent">#00000000</color>
+
+
+    <color name="login_background_gradient_top">#2E334A</color>
+    <color name="login_background_gradient_bottom">#090A0D</color>
+    <!-- For title in login screen and around register button-->
+    <color name="blue_aqua">#64edff</color>
+    <!-- For text inside textfields of login screen -->
+    <color name="blue_royal">#2699FB</color>
+    <color name="blue_royal_hint">#81B6E2</color>
+    <color name="login_text">#133958</color>
+    <color name="login_hint_text">#336288</color>
+    <!-- For gradient of email and password textboxes -->
+    <color name="white">#ffffff</color>
+    <color name="blue_celeste">#CBF1F6</color>
+    <!-- For login button gradient-->
+    <color name="login_button_gradient_top">#3E889B</color>
+    <color name="login_button_gradient_bottom">#2A4E71</color>
+
+    <color name="login_loginbutton_gradient_bottom_v1">#DAF6FA</color>
+    <color name="login_loginbutton_text">#6F6F6F</color>
+    <color name="login_loginutton_gradient_bottom_clicked_v2">#C4C4C4</color>
+    <color name="login_loginbutton_text_color_clicked">#353535</color>
+
+    <!-- Values to change login/register buttons to red if login is denied-->
+    <color name="login_button_gradient_top_clicked_denied">#EA6981</color>
+    <color name="login_button_gradient_bottom_clicked_denied">#E6284C</color>
+    <color name="login_register_button_clicked_denied">#F34145</color>
+
+    <color name="login_button_gradient_top_clicked_accepted">#92ECF8</color>
+    <color name="login_button_gradient_bottom_clicked_accepted">#2DD18A</color>
+    <color name="login_register_button_clicked_accepted">#07EE75</color>
+
+    <color name="register_text">#E2E9EF</color>
+    <color name="register_lines">#BCE0FD</color>
+    <color name="register_accepted">#3BD6EB</color>
+    <color name="register_button_gradient_top">#EA6981</color>
+    <color name="register_button_gradient_top_clicked">#df2043</color>
+    <color name="register_button_gradient_bottom">#E6284C</color>
+    <color name="register_button_gradient_bottom_clicked">#891026</color>
+    <color name="register_radio_button_border">#34495E</color>
+
+
+    <!-- color values for main activity -->
+    <color name="main_background">#083145</color>
+    <color name="main_foreground_rounded_rectangle_default">#19526F</color>
+    <color name="main_foreground_rounded_rectangle_clicked">#FF5959</color>
+    <color name="main_toolbar_top">#80222622</color>
+    <color name="main_toolbar_bottom">#00000000</color>
+    <color name="main_navigation_bar">#100000</color>
+    <color name="main_search_hint">#60FFFFFF</color>
+</resources>

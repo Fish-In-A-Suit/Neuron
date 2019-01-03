@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/login_loginbutton_text" android:state_pressed="false">
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+
+    <item android:color="@color/login_loginutton_gradient_bottom_clicked_v2" android:state_pressed="true">
+        <shape>
+            <gradient
+                android:angle="270"
+                android:endColor="@color/login_loginutton_gradient_bottom_clicked_v2"
+                android:startColor="@color/white"/>
+
+            <corners android:radius="2dp"/>
+        </shape>
+    </item>
+</selector>
