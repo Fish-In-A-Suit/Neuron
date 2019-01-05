@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -106,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements UsernameTab.OnFr
             public void onTabSelected(TabLayout.Tab tab) {
                 System.out.println("[Neuron.LoginActivity]: Setting viewpager tab to tab with position " + tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -118,6 +120,13 @@ public class LoginActivity extends AppCompatActivity implements UsernameTab.OnFr
 
             }
         });
+
+        for(int i=0; i<tabLayout.getTabCount() - 1; i++) {
+            View tab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+            p.setMargins(0, 0, 20, 0);
+            tab.requestLayout();
+        }
     }
 
     //on start is called after onCreate is completed

@@ -185,7 +185,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password_field"
         app:layout_constraintVertical_bias="0.13" />
@@ -205,48 +205,55 @@
         app:layout_constraintVertical_bias="0.25" />
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="344dp"
-        android:layout_height="328dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="330dp"
+        android:layout_height="310dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/login_googleregister_popup_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25">
 
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
+        <android.support.design.widget.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/login_tablayout"
+            android:layout_width="60dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="1.0"
+            app:tabBackground="@drawable/login_googleregister_tabitem_background"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabRippleColor="@color/transparent">
 
             <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="USERNAME" />
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:clickable="true" />
 
             <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SEX" />
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:clickable="true" />
 
             <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BIRTHDAY" />
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:clickable="true" />
         </android.support.design.widget.TabLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/login_after_google_signup_collection"
             android:layout_width="match_parent"
-            android:layout_height="276dp"
+            android:layout_height="260dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

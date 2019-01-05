@@ -38,6 +38,15 @@
     <color name="login_button_gradient_bottom_clicked_accepted">#2DD18A</color>
     <color name="login_register_button_clicked_accepted">#07EE75</color>
 
+    <color name="login_googleregister_popup_background_gradient_top">#22D0F3</color>
+    <color name="login_googleregister_popup_background_gradient_bottom">#245687</color>
+    <color name="login_googleregister_popup_circle_border">#0BB8E3</color>
+    <color name="login_googleregister_popup_circle_border_pressed">#3892EA</color>
+    <color name="login_googleregister_popup_circle_fill_eligible">#07E9D2</color>
+    <color name="login_googleregister_popup_circle_fill_uneligible">#DC3052</color>
+    <color name="login_googleregister_popup_circle_fill_currentpos">#1681EA</color>
+
+
     <color name="register_text">#E2E9EF</color>
     <color name="register_lines">#BCE0FD</color>
     <color name="register_accepted">#3BD6EB</color>
