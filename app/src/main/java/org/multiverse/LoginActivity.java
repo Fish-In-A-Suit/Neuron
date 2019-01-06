@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.multiverse.alternative.LoginPagerAdapter;
 import org.multiverse.multiversetools.GeneralTools;
 import org.multiverse.multiversetools.Padding;
+import org.multiverse.multiversetools.TabSwitcher;
 import org.tord.neuroncore.networking.DatabaseNetworking;
 import org.tord.neuroncore.networking.LoginNetworking;
 import org.tord.neuroncore.system.SystemUtilities;
@@ -96,17 +97,29 @@ public class LoginActivity extends AppCompatActivity implements UsernameTab.OnFr
             }
         });
 
+        //todo: MOVE ALL THESE TABLAYOUTS AND THE VIEWPAGER IN A SEPARATE CLASS... MAKE A CLASS WHICH MAKES IT EASY TO COMBINE A VIEWPAGER WITH A TABLAYOUT
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.login_after_google_signup_collection);
         final LoginPagerAdapter loginPagerAdapter = new LoginPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(loginPagerAdapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        //takes care of the switching between the pages and setting the icons of the tablayout based on which tab is selected.
+        final TabSwitcher ts = new TabSwitcher(null);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 System.out.println("[Neuron.LoginActivity]: Setting viewpager tab to tab with position " + tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
+
+                //todo: check if the page content at this tab is eligible...if it is, the eligibility prevails!
+                if(null!=ts.getTab()) {
+                    ts.getTab().setIcon(R.drawable.login_googleregister_tabitem_background);
+                }
+
+                tab.setIcon(R.drawable.login_googleregister_tabitem_background_position);
+                ts.setTab(tab);
 
             }
 
