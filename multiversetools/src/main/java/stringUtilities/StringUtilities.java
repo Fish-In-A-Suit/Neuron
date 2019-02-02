@@ -45,4 +45,23 @@ public class StringUtilities {
         }
         return res;
     }
+
+    /**
+     * Firebase database doesn't allow the path to consist of a dot character. Therefore, if you want to use an email as a path in the database,
+     * you have to encode it - ie. replace the dots with sth else, for example an underscore. Encoded emails are going to be stored with underscores.
+     * @param email
+     * @return
+     */
+    public static String encodeEmail(String email) {
+        return email.replace(".", "_");
+    }
+
+    /**
+     * Decodes the encoded email (underscores instead of dots) to contain the dots.
+     * @param email
+     * @return
+     */
+    public static String decodeEmail(String email) {
+        return email.replace("_", ".");
+    }
 }

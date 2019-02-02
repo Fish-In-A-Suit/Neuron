@@ -6,12 +6,19 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.ViewPager;
+import android.text.InputFilter;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,15 +26,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.signin.SignIn;
 
+import org.multiverse.multiversetools.alternative.SpinnerWithTitle;
 import org.multiverse.utilities.ArrayUtilities;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import stringUtilities.StringUtilities;
 
@@ -262,6 +272,72 @@ public class GeneralTools {
         System.out.println("[Neuron.MT.GeneralTools.inspectGoogleBtn]: Comprises of " + signInButton.getDrawableState().length + " drawables.");
 
         System.out.println("[Neuron.MT.GeneralTools.inspectGoogleBtn]: Button background: " + signInButton.getBackground());
+    }
+
+    /**
+     * Sets the margins of between the elements of the specified tab layout by the specified values
+     * @param tabLayout
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    public static void setTabLayoutMargins(TabLayout tabLayout, int left, int top, int right, int bottom) {
+        for(int i=0; i<tabLayout.getTabCount() - 1; i++) {
+            View tab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            tab.requestLayout();
+        }
+    }
+
+    /**
+     * Populates the specified Spinner with the values from arrayId specified, using the default android provided layouts to display elements
+     * @param context
+     * @param spinner
+     * @param arrayId
+     */
+    public static void populateSpinner(Context context, Spinner spinner, int arrayId) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, arrayId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    /**
+     * Sets the maximum length of characters allowed by the specified TextView
+     * @param v
+     * @param length
+     */
+    public static void setMaxTextViewLength(TextView v, int length) {
+        InputFilter[] filter = new InputFilter[1];
+        filter[0] = new InputFilter.LengthFilter(length);
+        v.setFilters(filter);
+    }
+
+    /**
+     * This method sets the specified count of offscreen pages to one less than the amount of "pages" the viewpager contains.
+     * This prevents the viewpager from "dumping" obsolete pages and their state.
+     * @param vp
+     */
+    public static void makeViewPagerNotForget(ViewPager vp) {
+        vp.setOffscreenPageLimit(vp.getAdapter().getCount()-1);
+    }
+
+    /**
+     * @param vp
+     * @return A list of all of the fragments associated with the specified instance of ViewPager
+     */
+    public static List<Fragment> findFragmentsInViewPager(ViewPager vp) {
+        List<Fragment> allFragments = new ArrayList<>();
+        for(int i = 0; i<vp.getAdapter().getCount(); i++) {
+            FragmentPagerAdapter fpa = (FragmentPagerAdapter) vp.getAdapter();
+            Fragment f = fpa.getItem(i);
+
+            System.out.println("[Neuron.Login.onActivityResult]: Adding fragment " + f + " to the list of all fragments");
+            allFragments.add(f);
+        }
+
+        return allFragments;
     }
 
 

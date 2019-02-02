@@ -1,15 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/usernameTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UsernameTab">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="USERNAME_TAB"
-        android:layout_centerInParent="true"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/usernameTab_greetText"
+        android:layout_width="311dp"
+        android:layout_height="64dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_afterGoogleSignUp_username_greet_text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
+
+    <EditText
+        android:id="@+id/usernameTab_username"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:hint="@string/Username"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/login_afterGoogleSignUp_hint"
+        android:textCursorDrawable="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTab_greetText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/usernameTab_error"
+        android:layout_width="296dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="6dp"
+        android:textAlignment="center"
+        android:textColor="@color/error"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTab_username"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/usernameTab_register"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/login_registerbutton_style"
+        android:enabled="false"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_registerbutton_text"
+        android:textColor="@drawable/login_registerbutton_text_colors"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTab_error"
+        app:layout_constraintVertical_bias="0.0" />
+</android.support.constraint.ConstraintLayout>

@@ -11,4 +11,8 @@ public class Constants {
     public static int MAIN_SEARCH_OFFSET = 4; //the offset used to set the padding of main_search edittext correctly
 
     public static String DATABASE_USER_DATA_LOCATION = "user_data"; //for storing information about the users
+
+    public static int LOGIN_BIRTHDAY_TAB_MONTH_SPINNER_MAX_LENGTH = 3;
+
+    public static int AFTERGOOGLESIGNUP_MAXIMUM_TAB_SWITCHES_DEFAULT = 2;
 }

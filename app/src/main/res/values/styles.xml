@@ -22,9 +22,24 @@
         <item name="android:background">@drawable/spinner_underlined</item>
     </style>
 
+    <style name="spinner_birthdayTab" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/moon_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="register_radio_button_changing_colour" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@drawable/register_radio_button_color_selector</item>
         <item name="android:buttonTint">@drawable/register_radio_button_color_selector</item>
+    </style>
+
+    <style name="login_afterGoogleSignUp_radio_button" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@drawable/register_radio_button_color_selector</item>
+        <item name="android:buttonTint">@drawable/login_after_google_signup_radiobutton_selector</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">

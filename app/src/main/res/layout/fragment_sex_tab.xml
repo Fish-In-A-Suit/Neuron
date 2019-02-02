@@ -1,15 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sexTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SexTab">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SEX_TAB"
-        android:layout_centerInParent="true"/>
+        android:id="@+id/sexTab_greetText"
+        android:layout_width="311dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_afterGoogleSignUp_sex_greet_text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
 
-</RelativeLayout>
+    <RadioGroup
+        android:id="@+id/sexTab_sex_selection"
+        style="@style/register_radio_button_changing_colour"
+        android:layout_width="262dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sexTab_greetText"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/sexTab_male"
+            style="@style/login_afterGoogleSignUp_radio_button"
+            android:layout_width="112dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:buttonTint="@color/login_afterGoogleSignUp_radiobutton_border"
+            android:fontFamily="@font/moon_bold"
+            android:text="@string/male"
+            android:textColor="@color/register_text"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/sexTab_female"
+            style="@style/login_afterGoogleSignUp_radio_button"
+            android:layout_width="112dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:buttonTint="@color/login_afterGoogleSignUp_radiobutton_border"
+            android:fontFamily="@font/moon_bold"
+            android:text="@string/female"
+            android:textColor="@color/register_text"
+            android:textSize="20dp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/sexTab_register"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/login_registerbutton_style"
+        android:enabled="false"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_registerbutton_text"
+        android:textColor="@drawable/login_registerbutton_text_colors"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sexTab_sex_selection"
+        app:layout_constraintVertical_bias="0.88" />
+
+</android.support.constraint.ConstraintLayout>

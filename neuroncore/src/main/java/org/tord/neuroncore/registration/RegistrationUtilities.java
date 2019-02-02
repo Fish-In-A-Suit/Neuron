@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import org.multiverse.multiversetools.ButtonGroup;
 import org.multiverse.multiversetools.GeneralTools;
 
 import stringUtilities.StringUtilities;
@@ -126,6 +127,22 @@ public class RegistrationUtilities {
         } else {
             System.out.println("[Neuron.NC.registration.RegistrationUtilities.tryToEnableRegistration]: Disabled user registration!");
             b.setEnabled(false);
+        }
+    }
+
+    /**
+     * Enables the all of the buttons in the specified button group if registrationEligibility.getTotalEligibility is true
+     * @param bg
+     */
+    public static void tryToEnableRegistration(RegistrationEligibility re, ButtonGroup bg) {
+        if (re.getTotalEligibility() == true) {
+            System.out.println("[Neuron.NC.registration.RegistrationUtilities.tryToEnableRegistration]: Enabled user registration!");
+            bg.enableAll();
+        } else {
+            System.out.println("[Neuron.NC.registration.RegistrationUtilities.tryToEnableRegistration]: Disabled user registration!");
+
+            re.display();
+            bg.disableAll();
         }
     }
 

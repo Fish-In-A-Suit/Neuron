@@ -15,25 +15,30 @@ import org.tord.neuroncore.registration.Sex;
 public class LoginPagerAdapter extends FragmentPagerAdapter {
     int numberOfTabs;
 
+    private UsernameTab usernameTab;
+    private SexTab sexTab;
+    private BirthdayTab birthdayTab;
+
     public LoginPagerAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         System.out.println("[Neuron.LoginPagerAdapter]: Creating a new LoginPagerAdapter with " + numberOfTabs + " tabs.");
         this.numberOfTabs = numberOfTabs;
+
+        usernameTab = new UsernameTab();
+        sexTab = new SexTab();
+        birthdayTab = new BirthdayTab();
     }
 
     @Override
     public Fragment getItem(int i) {
         switch(i) {
             case 0:
-                UsernameTab usernameTab = new UsernameTab();
                 System.out.println("[Neuron.LoginPagerAdapter]: Selected 0. Returning username tab: " + usernameTab.toString());
                 return usernameTab;
             case 1:
-                SexTab sexTab = new SexTab();
                 System.out.println("[Neuron.LoginPagerAdapter]: Selected 1. Returning sex tab: " + sexTab.toString());
                 return sexTab;
             case 2:
-                BirthdayTab birthdayTab = new BirthdayTab();
                 System.out.println("[Neuron.LoginPagerAdapter]: Selected 2. Returning birthday tab: " + birthdayTab.toString());
                 return birthdayTab;
             default:

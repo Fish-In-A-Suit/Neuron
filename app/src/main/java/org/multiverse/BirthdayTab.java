@@ -3,29 +3,32 @@ package org.multiverse;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.multiverse.multiversetools.FloatKeeper;
+import org.multiverse.multiversetools.GeneralTools;
+import org.multiverse.multiversetools.IntKeeper;
+import org.multiverse.multiversetools.alternative.SpinnerWithTitle;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BirthdayTab.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BirthdayTab#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BirthdayTab extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private SpinnerWithTitle month;
+    private SpinnerWithTitle day;
+    private SpinnerWithTitle year;
+    private ArrayAdapter<CharSequence> truncatedMonths;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button birthday_register;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,45 +36,17 @@ public class BirthdayTab extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BirthdayTab.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BirthdayTab newInstance(String param1, String param2) {
-        BirthdayTab fragment = new BirthdayTab();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_birthday_tab, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_birthday_tab, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return view;
     }
 
     @Override
@@ -91,6 +66,50 @@ public class BirthdayTab extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        birthday_register = (Button) getView().findViewById(R.id.birthdayTab_register);
+
+        //this adapter will be used to set the truncated month names in the month spinner with the specified layout.
+        truncatedMonths = new ArrayAdapter<CharSequence>(this.getContext(), R.layout.spinner_item_birthday_tab, (int) R.array.truncated_months);
+
+        System.out.println("[Neuron.BirthdayTab.onViewCreated]: Finding month, day and year spinners!");
+        month = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_month);
+        day = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_day);
+        year = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_year);
+
+        System.out.println("[Neuron.BirthdayTab.onViewCreated]: month id: " + month + " | day id: " + day + " | year id: " + year);
+
+        if(null!=month && null!=day && null!=year) {
+            populateSpinners();
+            configureSpinners();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("[Neuron.BirthdayTab]: Birthday fragment paused.");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        System.out.println("[Neuron.BirthdayTab]: Birthday fragment stopped.");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        System.out.println("[Neuron.BirthdayTab]: Birthday fragment view destroyed.");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.out.println("[Neuron.BirthdayTab]: Birthday fragment destroyed.");
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -104,5 +123,66 @@ public class BirthdayTab extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void populateSpinners() {
+        System.out.println("[Neuron.BirthdayTab.populateSpinners]: Populating spinners.");
+        month.setTitle("Month");
+        //todo: change this layout to change how the selected spinner item is displayed
+        month.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab);
+        month.setValues(this.getContext(), R.array.months);
+
+        day.setTitle("Day");
+        day.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab);
+        day.setValues(this.getContext(), R.array.days);
+
+        year.setTitle("Year");
+        year.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab);
+        year.setValues(this.getContext(), R.array.years);
+    }
+
+    private void configureSpinners() {
+        System.out.println("[Neuron.BirthdayTab.configureSpinners]: Configuring spinners");
+
+        //first, wait for the first selection. Then, when the first item is selected, restrict the month spinner textview to max 3 characters and remove the listener.
+        final IntKeeper restriction = new IntKeeper(0);
+        month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("[Neuron.BirthdayTab.configureSpinners]: Item with id " + id + " selected.");
+                if(restriction.getValue() == 0) {
+                    System.out.println("[Neuron.BirthdayTab.configureSpiners]: Changing the month spinner to only display three characters!");
+                    //if this is the first item selected, add a max length to the textview instance of the month spinner and then delete the listener
+                    month.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab_shortened);
+                    month.refresh(getContext());
+                    month.setOnItemSelectedListener(null);
+                    restriction.setValue(restriction.getValue()+1);
+                } else {
+                    System.out.println("[Neuron.BirthdayTab.configureSpiners]: aaaaaa!");
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public Button getRegisterButton() {
+        return birthday_register;
+    }
+
+    public Spinner getDaySpinner() {
+        return day;
+    }
+
+    public Spinner getMonthSpinner() {
+        return month;
+    }
+
+    public Spinner getYearSpinner() {
+        return year;
     }
 }

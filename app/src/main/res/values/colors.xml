@@ -5,6 +5,7 @@
     <color name="colorAccent">#303F9F</color>
     <color name="error">#F17171</color>
     <color name="gray_disabled">#747474</color>
+    <color name="gray_disabled_light">#c7c9c5</color>
     <color name="transparent">#00000000</color>
 
 
@@ -29,6 +30,9 @@
     <color name="login_loginutton_gradient_bottom_clicked_v2">#C4C4C4</color>
     <color name="login_loginbutton_text_color_clicked">#353535</color>
 
+    <color name="login_afterGoogleSignUp_hint">#60FFFFFF</color>
+    <color name="login_afterGoogleSignUp_radiobutton_border">#04EDF4</color>
+
     <!-- Values to change login/register buttons to red if login is denied-->
     <color name="login_button_gradient_top_clicked_denied">#EA6981</color>
     <color name="login_button_gradient_bottom_clicked_denied">#E6284C</color>
@@ -45,6 +49,7 @@
     <color name="login_googleregister_popup_circle_fill_eligible">#07E9D2</color>
     <color name="login_googleregister_popup_circle_fill_uneligible">#DC3052</color>
     <color name="login_googleregister_popup_circle_fill_currentpos">#1681EA</color>
+    <color name="login_googleregister_popup_birthdayfragment_spinnerlayout_background">#722F9EC6</color>
 
 
     <color name="register_text">#E2E9EF</color>

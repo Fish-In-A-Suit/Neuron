@@ -26,13 +26,15 @@ public class DatabaseUser implements Networkable {
         fullName = name;
         this.email = email;
 
-        if(sex == Sex.MALE) {
-            this.sex = "Male";
-        } else {
-            this.sex = "Female";
-        }
+        if(null != sex && null != birthday) {
+            if(sex == Sex.MALE) {
+                this.sex = "Male";
+            } else {
+                this.sex = "Female";
+            }
 
-        this.birthday = birthday.toString();
+            this.birthday = birthday.toString();
+        }
     }
 
     public DatabaseUser(RegisteredUser ru) {
@@ -68,5 +70,24 @@ public class DatabaseUser implements Networkable {
 
     public String getBirthday() {
         return birthday;
+    }
+
+    public void setUsername(String username) {
+        System.out.println("[Neuron.NC.database.DatabaseUser.setUsername]: Setting username to: " + username);
+        this.username = username;
+    }
+
+    public void setSex(Sex sex) {
+        System.out.println("[Neuron.NC.database.DatabaseUser.setUsername]: Setting sex to: " + sex);
+        if(sex == Sex.MALE) {
+            this.sex = "Male";
+        } else {
+            this.sex = "Female";
+        }
+    }
+
+    public void setBirthday(Birthday birthday) {
+        System.out.println("[Neuron.NC.database.DatabaseUser.setUsername]: Setting birthday to: " + birthday);
+        this.birthday = birthday.toString();
     }
 }

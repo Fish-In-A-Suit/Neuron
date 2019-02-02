@@ -1,5 +1,11 @@
 package org.tord.neuroncore.registration;
 
+import android.provider.ContactsContract;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+
 import org.tord.neuroncore.Constants;
 import org.tord.neuroncore.database.DatabaseUser;
 import org.tord.neuroncore.networking.DatabaseNetworking;
@@ -68,10 +74,14 @@ public class RegisteredUser implements Networkable {
         return birthday;
     }
 
+    /**
+     * This method is called from DatabaseNetworking to send data to the firebase databasse
+     */
     @Override
     public void sendDataToDatabase() {
         System.out.println("[Neuron.NC.registration.RegisteredUser]: Sending user data for user " + username + " to database.");
 
-        DatabaseNetworking.getDatabaseReference().child(Constants.DATABASE_USER_DATA_LOCATION).child(username).setValue(new DatabaseUser(this));
+        //adds this user to user_data node (under a child node which is the username)
+        DatabaseNetworking.writeUser(this);
     }
 }

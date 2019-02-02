@@ -35,6 +35,9 @@ public class SpinnerWithTitle extends AppCompatSpinner {
     private String title;
     private ArrayList<String> values;
     private int spinnerItemLayoutId;
+    private int spinnerItemDropdownLayoutId = android.R.layout.simple_spinner_dropdown_item; //the layout that is used for dropdown items
+
+    private int valuesId; //the location in memory which contains the values for this spinner
 
     //this constructor has to be present, so the class can be inflated!
     public SpinnerWithTitle(Context context, AttributeSet attrs) {
@@ -59,6 +62,17 @@ public class SpinnerWithTitle extends AppCompatSpinner {
         this.spinnerItemLayoutId = spinnerItemLayoutId;
     }
 
+    /**
+     * Call this method if changing the spinnerItemLayoutId during runtime, otherwise the call to setSpinnerItemLayoutId won't have no effect
+     */
+    public void refresh(Context c) {
+        if(0 != valuesId && 0 != spinnerItemLayoutId) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(c, valuesId, spinnerItemLayoutId);
+            adapter.setDropDownViewResource(spinnerItemDropdownLayoutId);
+            this.setAdapter(adapter);
+        }
+    }
+
     public String getTitle() {
         return title;
     }
@@ -69,8 +83,10 @@ public class SpinnerWithTitle extends AppCompatSpinner {
      * @param arrayId
      */
     public void setValues(Context c, int arrayId) {
+        valuesId = arrayId;
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(c, arrayId, spinnerItemLayoutId);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(spinnerItemDropdownLayoutId);
         this.setAdapter(adapter);
 
         values = ArrayUtilities.mergeLists(values, GeneralTools.getArrayFromResources(c, arrayId));

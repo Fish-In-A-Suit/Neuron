@@ -1,15 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/birthdayTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BirthdayTab">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BIRTHDAY_TAB"
-        android:layout_centerInParent="true"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/birthdayTab_greetText"
+        android:layout_width="311dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_afterGoogleSignUp_birthday_greet_text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
+
+
+    <LinearLayout
+        android:id="@+id/birthdayTab_spinner_layout"
+        android:layout_width="304dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/birthday_tab_spinner_layout_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdayTab_greetText"
+        app:layout_constraintVertical_bias="0.0">
+
+        <org.multiverse.multiversetools.alternative.SpinnerWithTitle
+            android:id="@+id/birthdayTab_month"
+            style="@style/spinner_birthdayTab"
+            android:layout_width="93dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="4dp"
+            android:background="@null"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="345dp" />
+
+        <org.multiverse.multiversetools.alternative.SpinnerWithTitle
+            android:id="@+id/birthdayTab_day"
+            style="@style/spinner_birthdayTab"
+            android:layout_width="93dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="4dp"
+            android:background="@null"
+            tools:layout_editor_absoluteX="89dp"
+            tools:layout_editor_absoluteY="434dp" />
+
+        <org.multiverse.multiversetools.alternative.SpinnerWithTitle
+            android:id="@+id/birthdayTab_year"
+            style="@style/spinner_birthdayTab"
+            android:layout_width="93dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:background="@null"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="389dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/birthdayTab_register"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/login_registerbutton_style"
+        android:enabled="false"
+        android:fontFamily="@font/moon_bold"
+        android:text="@string/login_registerbutton_text"
+        android:textColor="@drawable/login_registerbutton_text_colors"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdayTab_spinner_layout"
+        app:layout_constraintVertical_bias="0.88" />
+
+</android.support.constraint.ConstraintLayout>

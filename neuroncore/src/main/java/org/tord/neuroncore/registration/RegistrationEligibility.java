@@ -66,4 +66,17 @@ public class RegistrationEligibility {
             return false;
         }
     }
+
+    public void display() {
+        System.out.println("[Neuron.NC.registration.RegistrationEligibility]: Displaying instance of RegistrationEligibility:");
+        System.out.println("    - eligibleFirstName = " + eligibleFirstName + "\n" +
+        "   - eligibleLastName = " + eligibleLastName + "\n" +
+        "   - eligibleUsername= " + eligibleUsername + "\n" +
+        "   - passwordSufficientLength = " + passwordSufficientLength + "\n" +
+        "   - matchingPassword = " + matchingPassword + "\n" +
+        "   - eligibleEmail = " + eligibleEmail + "\n" +
+        "   - eligibleSex = " + eligibleSex + "\n" +
+        "   - eligibleBirthday = " + eligibleBirthday + "\n" +
+        "   - eligibleAcceptance = " + eligibleAcceptance);
+    }
 }
