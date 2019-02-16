@@ -5,7 +5,9 @@ import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.util.Log;
+import android.widget.ImageView;
 
 public class AnimationTools {
     static int numCallbacksThreshold = 0;
@@ -28,5 +30,18 @@ public class AnimationTools {
             });
         }
 
+    }
+
+    public static void startAnimation(ImageView v) {
+        System.out.println("[Neuron.mt.AnimationTools.startAnimation]: Starting animation on " + v);
+        Drawable d = v.getDrawable();
+
+        if(d instanceof AnimatedVectorDrawableCompat) {
+            AnimatedVectorDrawableCompat avdCompatAnim = (AnimatedVectorDrawableCompat) d;
+            avdCompatAnim.start();
+        } else if(d instanceof  AnimatedVectorDrawable) {
+            AnimatedVectorDrawable avdAnim = (AnimatedVectorDrawable) d;
+            avdAnim.start();
+        }
     }
 }

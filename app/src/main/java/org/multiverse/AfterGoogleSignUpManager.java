@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.multiverse.multiversetools.AnimationTools;
 import org.multiverse.multiversetools.ButtonGroup;
 import org.multiverse.multiversetools.GeneralTools;
 import org.multiverse.multiversetools.IntKeeper;
@@ -50,7 +51,10 @@ public class AfterGoogleSignUpManager {
 
     private int numTabSwitches; //switch only at the beginning the first two tabs by default, then after tht the user has to switch.
 
-   //TODO: ADD ANIMATED HIDDEN ICONS AT THE TOP OF EACH OF THE FRAGMENTS, WHICH ARE GREENISH CIRCLES WITH A TICK AND ANIMATE WHEN THE USER SUCCESSFULLY FILLS OUT THEIR INFO
+    //these switchers are used to prevent the tick animations from looping over and over again
+    private Switcher birthdayTabEligibleBefore;
+    private Switcher sexTabEligibleBefore;
+    private Switcher usernameTabEligibleBefore;
 
     public AfterGoogleSignUpManager(Context context, ViewTab viewTab, UsernameTab usernameTab, SexTab sexTab, BirthdayTab birthdayTab, DatabaseUser databaseUser) {
         System.out.println("[Neuron.AfterGoogleSignUpManager]: Creating instance... UsernameTab = " + usernameTab + ", SexTab = " + sexTab + ", BirthdayTab = " + birthdayTab);
@@ -63,6 +67,10 @@ public class AfterGoogleSignUpManager {
         this.birthdayTab = birthdayTab;
 
         this.databaseUser = databaseUser;
+
+        birthdayTabEligibleBefore = new Switcher(false);
+        sexTabEligibleBefore = new Switcher(false);
+        usernameTabEligibleBefore = new Switcher(false);
 
         configureRegisterButtons();
     }
@@ -103,10 +111,21 @@ public class AfterGoogleSignUpManager {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingUsernameTab]: First name is of sufficient length and doesn't contain any illegal characters! Setting eligibleUsername in RegistrationEligibility to true.");
                     databaseUser.setUsername(username);
                     registrationEligibility.setEligibleUsername(true);
+
+                    //if the state of username wasn't eligible before (false), then play the animation. Otherwise don't. This prevents continuous looping of the tick animation at each successful entry to the username field
+                    if(usernameTabEligibleBefore.get() != true) {
+                        usernameTab.getTickView().setVisibility(View.VISIBLE);
+                        AnimationTools.startAnimation(usernameTab.getTickView());
+                    }
+
                     errorText.setText("");
                     GeneralTools.setViewBackgroundTint(context, usernameEditText, R.color.default_color);
-
+                    usernameTabEligibleBefore.set(true);
                 } else {
+                    if(usernameTabEligibleBefore.get() == true) {
+                        usernameTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
+
                     if(!sufficientLength) {
                         RegistrationErrorDisplay.displayError(new InvalidLengthError(R.string.error_first_name_invalid_length), errorText);
                         GeneralTools.setViewBackgroundTint(context, usernameEditText, R.color.error);
@@ -125,6 +144,7 @@ public class AfterGoogleSignUpManager {
 
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingUsernameTab]: First name doesn't match the requirements... sufficientLength = " + sufficientLength + ", noIllegalCharacters = " + onlyAllowedCharacters + ".");
                     registrationEligibility.setEligibleUsername(false);
+                    usernameTabEligibleBefore.set(false);
                 }
 
                 RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
@@ -164,10 +184,22 @@ public class AfterGoogleSignUpManager {
                         databaseUser.setSex(Sex.FEMALE);
                     }
 
+                    sexTab.getTickView().setVisibility(View.VISIBLE);
+
+                    if(sexTabEligibleBefore.get() != true) {
+                        AnimationTools.startAnimation(sexTab.getTickView());
+                    }
+
                     registrationEligibility.setEligibleSex(true);
+                    sexTabEligibleBefore.set(true);
                 } else {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingSexTab]: Sex is NOT eligible.");
                     registrationEligibility.setEligibleSex(false);
+
+                    if(sexTabEligibleBefore.get() == true) {
+                        sexTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
+                    sexTabEligibleBefore.set(false);
                 }
 
                 RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
@@ -186,10 +218,22 @@ public class AfterGoogleSignUpManager {
                         databaseUser.setSex(Sex.FEMALE);
                     }
 
+                    sexTab.getTickView().setVisibility(View.VISIBLE);
+
+                    if(sexTabEligibleBefore.get() != true) {
+                        AnimationTools.startAnimation(sexTab.getTickView());
+                    }
+
                     registrationEligibility.setEligibleSex(true);
+                    sexTabEligibleBefore.set(true);
                 } else {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingSexTab]: Sex is NOT eligible.");
                     registrationEligibility.setEligibleSex(false);
+
+                    if(sexTabEligibleBefore.get() == true) {
+                        sexTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
+                    sexTabEligibleBefore.set(false);
                 }
 
                 RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
@@ -225,8 +269,20 @@ public class AfterGoogleSignUpManager {
                     databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
+
+                    birthdayTab.getTickView().setVisibility(View.VISIBLE);
+
+                    if(birthdayTabEligibleBefore.get() != true) {
+                        AnimationTools.startAnimation(birthdayTab.getTickView());
+                    }
+
+                    birthdayTabEligibleBefore.set(true);
                 } else {
+                    if(birthdayTabEligibleBefore.get() == true) {
+                        birthdayTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
                     registrationEligibility.setEligibleBirthday(false);
+                    birthdayTabEligibleBefore.set(false);
                 }
             }
 
@@ -248,7 +304,19 @@ public class AfterGoogleSignUpManager {
                     databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
+
+                    birthdayTab.getTickView().setVisibility(View.VISIBLE);
+
+                    if(birthdayTabEligibleBefore.get() != true) {
+                        AnimationTools.startAnimation(birthdayTab.getTickView());
+                    }
+
+                    birthdayTabEligibleBefore.set(true);
                 } else {
+                    if(birthdayTabEligibleBefore.get() == true) {
+                        birthdayTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
+                    birthdayTabEligibleBefore.set(false);
                     registrationEligibility.setEligibleBirthday(false);
                 }
             }
@@ -275,8 +343,20 @@ public class AfterGoogleSignUpManager {
                     databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
+
+                    birthdayTab.getTickView().setVisibility(View.VISIBLE);
+
+                    if(birthdayTabEligibleBefore.get() != true) {
+                        AnimationTools.startAnimation(birthdayTab.getTickView());
+                    }
+
+                    birthdayTabEligibleBefore.set(true);
                 } else {
+                    if(birthdayTabEligibleBefore.get() == true) {
+                        birthdayTab.getTickView().setVisibility(View.INVISIBLE);
+                    }
                     registrationEligibility.setEligibleBirthday(false);
+                    birthdayTabEligibleBefore.set(false);
                 }
             }
 

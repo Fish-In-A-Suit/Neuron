@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class SexTab extends Fragment {
     private RadioButton sex_female;
 
     private Button sex_register;
+
+    private ImageView sex_tick;
 
     public SexTab() {
         // Required empty public constructor
@@ -47,6 +50,8 @@ public class SexTab extends Fragment {
         sex_male = (RadioButton) getView().findViewById(R.id.sexTab_male);
         sex_female = (RadioButton) getView().findViewById(R.id.sexTab_female);
         sex_register = (Button) getView().findViewById(R.id.sexTab_register);
+        sex_tick = (ImageView) getView().findViewById(R.id.sexTab_tick);
+        sex_tick.setVisibility(View.INVISIBLE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,6 +109,10 @@ public class SexTab extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public ImageView getTickView() {
+        return sex_tick;
     }
 
     public Button getRegisterButton() {

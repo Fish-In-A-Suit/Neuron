@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,8 +27,8 @@ public class BirthdayTab extends Fragment {
     private SpinnerWithTitle month;
     private SpinnerWithTitle day;
     private SpinnerWithTitle year;
-    private ArrayAdapter<CharSequence> truncatedMonths;
 
+    private ImageView birthday_tick;
     private Button birthday_register;
 
     private OnFragmentInteractionListener mListener;
@@ -69,9 +70,11 @@ public class BirthdayTab extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         birthday_register = (Button) getView().findViewById(R.id.birthdayTab_register);
+        birthday_tick = (ImageView) getView().findViewById(R.id.birthdayTab_tick);
+        birthday_tick.setVisibility(View.INVISIBLE);
 
         //this adapter will be used to set the truncated month names in the month spinner with the specified layout.
-        truncatedMonths = new ArrayAdapter<CharSequence>(this.getContext(), R.layout.spinner_item_birthday_tab, (int) R.array.truncated_months);
+        //truncatedMonths = new ArrayAdapter<CharSequence>(this.getContext(), R.layout.spinner_item_birthday_tab, (int) R.array.truncated_months);
 
         System.out.println("[Neuron.BirthdayTab.onViewCreated]: Finding month, day and year spinners!");
         month = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_month);
@@ -168,6 +171,10 @@ public class BirthdayTab extends Fragment {
 
             }
         });
+    }
+
+    public ImageView getTickView() {
+        return birthday_tick;
     }
 
     public Button getRegisterButton() {

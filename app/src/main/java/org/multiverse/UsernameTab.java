@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -20,6 +21,7 @@ public class UsernameTab extends Fragment {
     private EditText usernameText;
     private TextView error;
     private Button username_register;
+    private ImageView username_tick;
 
     public UsernameTab() {
         // Required empty public constructor
@@ -44,6 +46,8 @@ public class UsernameTab extends Fragment {
         usernameText = (EditText) getView().findViewById(R.id.usernameTab_username);
         error = (TextView) getView().findViewById(R.id.usernameTab_error);
         username_register = (Button) getView().findViewById(R.id.usernameTab_register);
+        username_tick = (ImageView) getView().findViewById(R.id.usernameTab_tick);
+        username_tick.setVisibility(View.INVISIBLE);
 
         System.out.println("[Neuron.UsernameTab.onViewCreated]: usernameText = " + usernameText + " | username error reporting view = " + error);
     }
@@ -103,6 +107,10 @@ public class UsernameTab extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public ImageView getTickView() {
+        return username_tick;
     }
 
     public EditText getUsernameEditText() {
