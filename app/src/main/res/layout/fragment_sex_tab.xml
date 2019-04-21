@@ -5,7 +5,7 @@
     android:id="@+id/sexTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SexTab">
+    tools:context=".registration.firstTimeGoogleSignup.SexTab">
 
     <TextView
         android:id="@+id/sexTab_greetText"

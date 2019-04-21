@@ -4,10 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.multiverse.BirthdayTab;
-import org.multiverse.SexTab;
-import org.multiverse.UsernameTab;
-import org.tord.neuroncore.registration.Sex;
+import org.multiverse.registration.firstTimeGoogleSignup.BirthdayTab;
+import org.multiverse.registration.firstTimeGoogleSignup.SexTab;
+import org.multiverse.registration.firstTimeGoogleSignup.UsernameTab;
 
 /**
  * Pager adapter used to display tabs if the user decides to sign up with google so as to get user's username, sex and birthday

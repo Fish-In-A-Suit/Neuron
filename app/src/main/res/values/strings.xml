@@ -27,6 +27,7 @@
     <string name="day">DAY</string>
     <string name="year">YEAR</string>
     <string name="register_terms_and_privacy">Accept Terms of Service and Privacy Policy</string>
+    <string name="register_email_already_in_use">The specified email is already in use! Choose a different email.</string>
 
 
     <string name="main_map_text">EXPLORE!</string>

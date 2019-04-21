@@ -27,4 +27,11 @@ public class ArrayUtilities {
             System.out.print(s + ", ");
         }
     }
+
+    public static void displayArray(ArrayList<String> arrayList) {
+        for(String s : arrayList) {
+            System.out.println("s");
+        }
+        System.out.println("");
+    }
 }

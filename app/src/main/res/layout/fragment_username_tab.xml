@@ -5,7 +5,7 @@
     android:id="@+id/usernameTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UsernameTab">
+    tools:context=".registration.firstTimeGoogleSignup.UsernameTab">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -97,7 +97,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/anim_aftergooglesignup_tick_completed"
+        android:src="@drawable/anim_aftergooglesignup_tick_completed_200ms_linear"
         app:layout_constraintBottom_toTopOf="@+id/usernameTab_greetText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
