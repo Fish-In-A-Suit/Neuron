@@ -1,4 +1,4 @@
-package org.multiverse.registration;
+package org.multiverse.registration.firstTimeGoogleSignup;
 
 
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.multiverse.registration.RegistrationUtilities;
 import org.multiverse.registration.firstTimeGoogleSignup.BirthdayTab;
 import org.multiverse.login.LoginActivity;
 import org.multiverse.MainActivity;
@@ -130,7 +131,7 @@ public class AfterGoogleSignUpManager {
 
                 if (sufficientLength == true && onlyAllowedCharacters == true) {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingUsernameTab]: First name is of sufficient length and doesn't contain any illegal characters! Setting eligibleUsername in RegistrationEligibility to true.");
-                    databaseUser.setUsername(username);
+                    //databaseUser.setUsername(username);
                     registrationEligibility.setEligibleUsername(true);
 
                     //if the state of username wasn't eligible before (false), then play the animation. Otherwise don't. This prevents continuous looping of the tick animation at each successful entry to the username field
@@ -200,11 +201,13 @@ public class AfterGoogleSignUpManager {
                 if(sexTab.getMaleButton().isChecked() || sexTab.getFemaleButton().isChecked()) {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingSexTab]: Sex is eligible.");
 
+                    /*
                     if(sexTab.getMaleButton().isChecked()) {
                         databaseUser.setSex(Sex.MALE);
                     } else {
                         databaseUser.setSex(Sex.FEMALE);
                     }
+                    */
 
                     sexTab.getTickView().setVisibility(View.VISIBLE);
 
@@ -234,11 +237,13 @@ public class AfterGoogleSignUpManager {
                 if(sexTab.getMaleButton().isChecked() || sexTab.getFemaleButton().isChecked()) {
                     System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingSexTab]: Sex is eligible.");
 
+                    /*
                     if(sexTab.getMaleButton().isChecked()) {
                         databaseUser.setSex(Sex.MALE);
                     } else {
                         databaseUser.setSex(Sex.FEMALE);
                     }
+                    */
 
                     sexTab.getTickView().setVisibility(View.VISIBLE);
 
@@ -267,9 +272,11 @@ public class AfterGoogleSignUpManager {
     private void startLoggingBirthdayTab() {
         System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingSexTab]: Started logging birthday tab.");
 
+        /*
         final StringKeeper monthValue = new StringKeeper("");
         final IntKeeper dayValue = new IntKeeper(-1);
         final IntKeeper yearValue = new IntKeeper(-1);
+        */
 
         final Switcher dayEligibility = new Switcher(false);
         final Switcher monthEligibility = new Switcher(false);
@@ -280,17 +287,19 @@ public class AfterGoogleSignUpManager {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingBirthdayTab]: The user has successfully specified the day of their birthday");
 
+                /*
                 try {
                     dayValue.setValue(Integer.parseInt(birthdayTab.getDaySpinner().getSelectedItem().toString()));
                 } catch (NumberFormatException e) {
                     System.err.println("[Neuron.AfterGoogleSignUpManager.startLoggingBirthdayTab]: The day of the birthday cannot be parsed! Value: " + birthdayTab.getDaySpinner().getSelectedItem().toString());
                 }
+                */
 
 
                 dayEligibility.set(true);
 
                 if(dayEligibility.get() && monthEligibility.get() && yearEligibility.get()) {
-                    databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
+                    //databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
 
@@ -322,10 +331,10 @@ public class AfterGoogleSignUpManager {
                 System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingBirthdayTab]: The user has successfully specified the month of their birthday");
                 monthEligibility.set(true);
 
-                monthValue.setValue(birthdayTab.getMonthSpinner().getSelectedItem().toString());
+                //monthValue.setValue(birthdayTab.getMonthSpinner().getSelectedItem().toString());
 
                 if(dayEligibility.get() && monthEligibility.get() && yearEligibility.get()) {
-                    databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
+                    //databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
 
@@ -357,14 +366,16 @@ public class AfterGoogleSignUpManager {
                 System.out.println("[Neuron.AfterGoogleSignUpManager.startLoggingBirthdayTab]: The user has successfully specified the year of their birthday.");
                 yearEligibility.set(true);
 
+                /*
                 try {
                     yearValue.setValue(Integer.parseInt(birthdayTab.getYearSpinner().getSelectedItem().toString()));
                 } catch (NumberFormatException e) {
                     System.err.println("[Neuron.AfterGoogleSignUpManager.startLoggingBirthdayTab]: The year couldn't be parsed properly.");
                 }
+                */
 
                 if(dayEligibility.get() && monthEligibility.get() && yearEligibility.get()) {
-                    databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
+                    //databaseUser.setBirthday(new Birthday(monthValue.getValue(), dayValue.getValue(), yearValue.getValue()));
                     registrationEligibility.setEligibleBirthday(true);
                     RegistrationUtilities.tryToEnableRegistration(registrationEligibility, registerButtons);
 
@@ -428,7 +439,6 @@ public class AfterGoogleSignUpManager {
         System.out.println("[Neuron.AfterGoogleSignUpManager.registerUserToDatabase]: Trying to register user " + databaseUser.getFullName() + " to the database.");
 
         DatabaseNetworking.checkForEmailClashesAndSendToDatabase(databaseUser, this);
-        System.out.println("[Neuron.AfterGoogleSignUpManager.registerUserToDatabase]: No email clashes found! The user has been sent to the database.");
     }
 
     public void updateUI() {
@@ -439,8 +449,33 @@ public class AfterGoogleSignUpManager {
         return context;
     }
 
+    public LoginActivity getLoginActivity() {
+        return loginActivity;
+    }
+
     public void notifyAboutEmailAlreadyInUse() {
         System.out.println("[Neuron.AfterGoogleSignUpManager.registerUserToDatabase]: Notifying the user about email already in use exception.");
         loginActivity.displayMsg(R.string.register_email_already_in_use);
+    }
+
+    /**
+     * Builds a DatabaseUser instance from all of the fields specified using the specified email and fullname
+     * @return
+     */
+    public DatabaseUser buildUser(String fullName, String email) {
+        System.out.println("[Neuron.registration.AfterGoogleSignUpManager.buildUser]: Building a user instance using the specified fields...");
+        Sex sex = null;
+
+        if(sexTab.getMaleButton().isChecked() == true) {
+            sex = Sex.MALE;
+        } else if (sexTab.getFemaleButton().isChecked() == true) {
+            sex = Sex.FEMALE;
+        } else {
+            System.out.println("[Neuron.registration.AfterGoogleSignUpManager.buildUser]: None of the buttons in sextab is checked! The sex for the user isn't specified!!!");
+        }
+
+        DatabaseUser user = new DatabaseUser(usernameTab.getUsernameEditText().getText().toString(), fullName, email, sex, birthdayTab.getBirthday());
+        user.display();
+        return user;
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import org.multiverse.R;
 import org.multiverse.multiversetools.valuekeepers.IntKeeper;
 import org.multiverse.multiversetools.alternative.SpinnerWithTitle;
+import org.tord.neuroncore.registration.Birthday;
 
 
 public class BirthdayTab extends Fragment {
@@ -186,5 +187,16 @@ public class BirthdayTab extends Fragment {
 
     public Spinner getYearSpinner() {
         return year;
+    }
+
+    /**
+     * @return A birthday instance from the values of the spinner
+     */
+    public Birthday getBirthday() {
+        String month = this.month.getSelectedItem().toString();
+        int day = Integer.parseInt(this.day.getSelectedItem().toString());
+        int year = Integer.parseInt(this.year.getSelectedItem().toString());
+
+        return new Birthday(month, day, year);
     }
 }

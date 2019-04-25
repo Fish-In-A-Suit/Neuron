@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import org.multiverse.database.DatabaseUser;
 import org.multiverse.multiversetools.GeneralTools;
 import org.multiverse.multiversetools.ViewTab;
+import org.multiverse.registration.firstTimeGoogleSignup.GoogleSignUpAccountManager;
 import org.tord.neuroncore.R;
 
 public class LoginNetworking {
@@ -69,9 +70,11 @@ public class LoginNetworking {
      * @param activity
      */
     public static void signUserInWithGoogle(Context activityContext, FragmentActivity activity) {
-        System.out.println("[Neuron.NC.networking.LoginNetworking.signUserInWithGoogle]: Starting the process of google-sign-in.");
+        System.out.println("[Neuron.login.LoginNetworking.signUserInWithGoogle]: Starting the process of google-sign-in.");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(activityContext.getString(R.string.default_web_client_id)).requestEmail().build();
+
+        //this displays the emails
         googleApiClient = new GoogleApiClient.Builder(activityContext).enableAutoManage(activity, new GoogleApiClient.OnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -79,7 +82,11 @@ public class LoginNetworking {
             }
         }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
+        GoogleSignUpAccountManager.setCurrentUser(googleApiClient);
+        GoogleSignUpAccountManager.setFragmentActivity(activity);
+
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -146,10 +153,11 @@ public class LoginNetworking {
     public static DatabaseUser determineSignInSuccess(int requestCode, Intent data, final Activity sourceActivity, final Class targetActivityClass, final ViewTab viewTab) {
         //check which request we're responding to
         if (requestCode == RC_SIGN_IN) {
+            System.out.println("[Neuron.login.LoginNetworking.determineSignInSuccess]: The request code matches the RC_SIGN_IN code.");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
             if(result.isSuccess()) {
-                System.out.println("[Neuron.NC.networking.LoginNetworking.signUserInWithGoogle]: Google sign in result is successful");
+                System.out.println("[Neuron.login.LoginNetworking.determineSignInSuccess]: Google sign in result is successful");
                 final GoogleSignInAccount account = result.getSignInAccount();
 
                 //to use
@@ -159,7 +167,7 @@ public class LoginNetworking {
                 Uri accountPhoto = account.getPhotoUrl();
                 String accountPhoneURL = account.getPhotoUrl().toString();
 
-                System.out.println("[Neuron.NC.networking.LoginNetworking.signUserInWithGoogle]: Account info:" + "\n" +
+                System.out.println("[Neuron.login.LoginNetworking.determineSignInSuccess]: Account info:" + "\n" +
                         "Name: " + accountName + "\n" +
                         "Email: " + accountEmail + "\n" +
                         "Id: " + accountId );

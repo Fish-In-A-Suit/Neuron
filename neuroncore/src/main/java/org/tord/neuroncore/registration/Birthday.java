@@ -1,7 +1,5 @@
 package org.tord.neuroncore.registration;
 
-import java.time.Month;
-
 public class Birthday {
     private int year;
     private Month month;

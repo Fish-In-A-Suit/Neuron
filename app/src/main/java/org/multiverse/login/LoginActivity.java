@@ -26,7 +26,7 @@ import org.multiverse.multiversetools.Padding;
 import org.multiverse.multiversetools.TabSwitcher;
 import org.multiverse.multiversetools.ViewTab;
 import org.multiverse.database.DatabaseUser;
-import org.multiverse.registration.AfterGoogleSignUpManager;
+import org.multiverse.registration.firstTimeGoogleSignup.AfterGoogleSignUpManager;
 import org.multiverse.registration.RegisterActivity;
 import org.multiverse.registration.firstTimeGoogleSignup.BirthdayTab;
 import org.multiverse.registration.firstTimeGoogleSignup.SexTab;
@@ -118,8 +118,10 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        System.out.println("[Neuron.Login.onActivityResult]: In onActivityResult");
+
         DatabaseUser incompleteDatabaseUser = LoginNetworking.determineSignInSuccess(requestCode, data, LoginActivity.this, MainActivity.class, afterGoogleSignupTab);
-        System.out.println("Displaying incompleteDatabaseUser");
+        System.out.println("[Neuron.Login.onActivityResult]: Displaying incompleteDatabaseUser");
         incompleteDatabaseUser.display();
 
         System.out.println("[Neuron.Login.onActivityResult]: Starting to query for individual fragments in login_viewPagerLayout");
@@ -226,8 +228,17 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
             @Override
             public void onClick(View v) {
                 LoginNetworking.signUserInWithGoogle(LoginActivity.this.getBaseContext(), LoginActivity.this);
+                googleSignInBtn.setEnabled(false); //disables the google btn to prevent further clicks
             }
         });
+    }
+
+    public void enableGoogleButton(boolean enable) {
+        if(enable == true) {
+            googleSignInBtn.setEnabled(true);
+        } else {
+            googleSignInBtn.setEnabled(false);
+        }
     }
 
     /**

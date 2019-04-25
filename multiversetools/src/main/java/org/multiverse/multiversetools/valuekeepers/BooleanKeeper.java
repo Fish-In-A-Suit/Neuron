@@ -1,4 +1,4 @@
-package org.multiverse.multiversetools.alternative;
+package org.multiverse.multiversetools.valuekeepers;
 
 public class BooleanKeeper {
     private boolean value;

@@ -93,9 +93,10 @@ public class DatabaseUser implements Networkable {
     }
 
     public void display() {
-        System.out.println("    - username: " + username);
-        System.out.println("    - full_name: " + fullName);
-        System.out.println("    - sex: " + sex);
-        System.out.println("    - birthday: " + birthday);
+        System.out.println("[Neuon.DatabaseUser.display]: Displaying DatabaseUser:");
+        System.out.println("[Neuron]    - username: " + username);
+        System.out.println("[Neuron]    - full_name: " + fullName);
+        System.out.println("[Neuron]    - sex: " + sex);
+        System.out.println("[Neuron]    - birthday: " + birthday);
     }
 }

@@ -2,15 +2,18 @@ package org.multiverse.database;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.multiverse.registration.AfterGoogleSignUpManager;
+import org.multiverse.registration.firstTimeGoogleSignup.AfterGoogleSignUpManager;
 import org.multiverse.multiversetools.valuekeepers.StringKeeper;
-import org.multiverse.multiversetools.alternative.BooleanKeeper;
+import org.multiverse.multiversetools.valuekeepers.BooleanKeeper;
+import org.multiverse.registration.firstTimeGoogleSignup.GoogleSignUpAccountManager;
 import org.tord.neuroncore.Constants;
 import org.tord.neuroncore.databaseerror.EmailAlreadyInUseException;
 import org.tord.neuroncore.databaseerror.UsedEmailsLoadedCallback;
@@ -88,11 +91,11 @@ public class DatabaseNetworking {
 
     /**
      * Checks for possible email collisions and sends the specified DatabaseUser to the database (and updates the ui) if there are no email clashes. This should be the preferred way of sending users to the database!
-     * @param du
+     * @param dbUser
      */
-    public static void checkForEmailClashesAndSendToDatabase(final DatabaseUser du, final AfterGoogleSignUpManager agsm) {
-        System.out.println("[Neuron.NC.networking.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Checking for email clashes and trying to send user data for " + du.getFullName() + " to the database.");
-        final StringKeeper userEmail = new StringKeeper(du.getEmail());
+    public static void checkForEmailClashesAndSendToDatabase(final DatabaseUser dbUser, final AfterGoogleSignUpManager agsm) {
+        System.out.println("[Neuron.NC.networking.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Checking for email clashes and trying to send user data for " + dbUser.getFullName() + " to the database.");
+        final StringKeeper userEmail = new StringKeeper(dbUser.getEmail());
         final BooleanKeeper noEmailClashes = new BooleanKeeper(true);
 
         /*
@@ -114,13 +117,23 @@ public class DatabaseNetworking {
 
                 if(noEmailClashes.get() == true) { //if there are no email clashes, send the user to the database
                     System.out.println("[Neuron.NC.networking.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: No email clashes. Sending user data to the server.");
-                    du.sendDataToDatabase();
+                    //dbUser.sendDataToDatabase();
+                    agsm.buildUser(dbUser.getFullName(), dbUser.getEmail()).sendDataToDatabase();
 
                     agsm.updateUI(); //changes the ui, ie starts the main activity
                 } else {
-                    System.out.println("[Neuron.NC.networking.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Email clash has been found!");
+                    System.out.println("[Neuron.database.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Email clash has been found!");
 
-                    //todo: START FROM HERE! NOTIFY THE USER PROPERLY IF THE SPECIFIED EMAIL IS ALREADY IN USE!
+                    //this call makes it so that the currently used account by the GoogleSignInApi is forgotten, so that other google accounts are displayed on the next button click. Without this call, the previous account would be used, therefore disabling the user to select an another account
+                    System.out.println("[Neuron.database.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Signing out the user from the GoogleSignInApi (allowing the user to specify another account upon button click).");
+                    Auth.GoogleSignInApi.signOut(GoogleSignUpAccountManager.getCurrentUser());
+
+                    GoogleSignUpAccountManager.disconnectAndFreeMemory();
+
+                    System.out.println("[Neuron.database.DatabaseNetworking.checkForEmailClashesAndSendToDatabase]: Signing out user " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + " from firebase.");
+                    FirebaseAuth.getInstance().getCurrentUser().delete();
+
+                    agsm.getLoginActivity().enableGoogleButton(true);
                     agsm.notifyAboutEmailAlreadyInUse();
                 }
             }
