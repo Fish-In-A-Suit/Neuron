@@ -1,5 +1,7 @@
 package org.multiverse.database;
 
+import com.google.firebase.database.Exclude;
+
 import org.tord.neuroncore.Constants;
 import org.tord.neuroncore.networking.Networkable;
 import org.tord.neuroncore.registration.Birthday;
@@ -55,6 +57,7 @@ public class DatabaseUser implements Networkable {
         System.out.println("[Neuron.NC.database.DatabaseUser]: Sending user data for user " + username + " to the server.");
         DatabaseNetworking.getDatabaseReference().child(Constants.DATABASE_USER_DATA_LOCATION).child(username).setValue(this);
         DatabaseNetworking.getDatabaseReference().child(Constants.DATABASE_EMAILS_USED_LOCATION).child(username).setValue(email);
+        DatabaseNetworking.getDatabaseReference().child(Constants.DATABASE_USERNAMES_USED_LOCATION).child(fullName).setValue(username);
     }
 
     public String getFullName() {
@@ -71,6 +74,11 @@ public class DatabaseUser implements Networkable {
 
     public String getBirthday() {
         return birthday;
+    }
+
+    @Exclude
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {

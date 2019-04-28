@@ -33,23 +33,20 @@ public class RegistrationNetworking {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    //todo: store user-related info to the database
-                    DatabaseNetworking.addNewData(registeredUser);
-
-                    FirebaseUser user = fbAuth.getCurrentUser();
-                    UserUpdate.setDisplayName(user, registeredUser.getName());
-                    updateUIOnSuccessfulRegistration(user, currentActivty, targetActivityClass);
+                    //DatabaseNetworking.addNewData(registeredUser);
+                    DatabaseNetworking.checkForEmailClashesAndSendToDatabase(registeredUser, currentActivty, targetActivityClass);
                 } else {
-                    Toast.makeText(currentActivty, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    try {
+                        throw new FirebaseAuthInvalidCredentialsException("ERROR_CREDENTIAL_ALREADY_IN_USE", "[Neuron.registration.RegistrationNetworking.registerUser]: Invalid credentials");
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        e.printStackTrace();
+                    }
+
+                    //todo: check for the error code? and then determine what to show.
+
+                    Toast.makeText(currentActivty, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    //updates the UI (ie starts the target activity) ... call this if registration process is successful
-    private static void updateUIOnSuccessfulRegistration(FirebaseUser user, Activity current, Class targetClass) {
-        //todo: greet the user
-        GeneralTools.launchNewActivity(current.getBaseContext(), targetClass);
-        //Toast.makeText(targetClass, "Authentication successful! Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
     }
 }

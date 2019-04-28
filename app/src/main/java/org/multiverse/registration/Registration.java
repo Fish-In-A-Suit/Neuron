@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
+import org.multiverse.database.DatabaseNetworking;
 import org.multiverse.multiversetools.GeneralTools;
 import org.tord.neuroncore.R;
 import org.tord.neuroncore.registrationerror.InvalidCharacterError;
@@ -507,8 +508,10 @@ public class Registration {
                 System.out.println("[Neuron.NC.registration.Registration.setupRegisterButton]: Register button has been clicked! Attempting to register user...");
                 registeredUser = RegistrationUtilities.createRegisteredUser(firstName, lastName, username, password, email, male, month, day, year);
 
+                DatabaseNetworking.checkForEmailClashesAndSendToDatabase(registeredUser, currentActivity, targetActivityClass);
+
                 try {
-                    RegistrationNetworking.registerUser(currentActivity, targetActivityClass, fbAuth, registeredUser);
+                   RegistrationNetworking.registerUser(currentActivity, targetActivityClass, fbAuth, registeredUser);
                 } catch (FirebaseAuthInvalidCredentialsException e) {
                     System.out.println("[Neuron.NC.registration.Registration.setupRegisterButton]: The email specified " + registeredUser.getEmail() + " is INVALID!");
                 }

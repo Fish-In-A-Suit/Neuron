@@ -1,6 +1,7 @@
 package org.multiverse.registration;
 
 import org.multiverse.database.DatabaseNetworking;
+import org.multiverse.database.DatabaseUser;
 import org.tord.neuroncore.networking.Networkable;
 import org.tord.neuroncore.registration.Birthday;
 import org.tord.neuroncore.registration.Sex;
@@ -77,5 +78,16 @@ public class RegisteredUser implements Networkable {
 
         //adds this user to user_data node (under a child node which is the username)
         DatabaseNetworking.writeUser(this);
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    /**
+     * @return A DatabaseUser instance from the specified fields
+     */
+    public DatabaseUser buildDatabaseUser() {
+        return new DatabaseUser(username, firstName + " " + lastName, email, sex, birthday);
     }
 }

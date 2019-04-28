@@ -12,6 +12,7 @@ public class Constants {
 
     public static String DATABASE_USER_DATA_LOCATION = "user_data"; //for storing information about the users
     public static String DATABASE_EMAILS_USED_LOCATION = "emails_used"; //for storing the already registrated emails
+    public static String DATABASE_USERNAMES_USED_LOCATION = "usernames_used";
 
     public static int LOGIN_BIRTHDAY_TAB_MONTH_SPINNER_MAX_LENGTH = 3;
 

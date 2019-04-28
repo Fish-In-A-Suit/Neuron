@@ -454,8 +454,14 @@ public class AfterGoogleSignUpManager {
     }
 
     public void notifyAboutEmailAlreadyInUse() {
-        System.out.println("[Neuron.AfterGoogleSignUpManager.registerUserToDatabase]: Notifying the user about email already in use exception.");
+        System.out.println("[Neuron.AfterGoogleSignUpManager.notifyAboutEmailAlreadyInUse]: Notifying the user about email already in use exception.");
         loginActivity.displayMsg(R.string.register_email_already_in_use);
+    }
+
+    public void notifyAboutUsernameAlreadyInUse() {
+        System.out.println("[Neuron.AfterGoogleSignUpManager.notifyAboutUsernameAlreadyInUse]: Notifying the user about the username already being in use exception.");
+        switchToUsernameTab();
+        loginActivity.displayMsg(R.string.register_username_already_in_use);
     }
 
     /**
@@ -477,5 +483,13 @@ public class AfterGoogleSignUpManager {
         DatabaseUser user = new DatabaseUser(usernameTab.getUsernameEditText().getText().toString(), fullName, email, sex, birthdayTab.getBirthday());
         user.display();
         return user;
+    }
+
+    public String getUsername() {
+        return usernameTab.getUsernameEditText().getText().toString();
+    }
+
+    public void switchToUsernameTab() {
+        viewTab.getViewPager().setCurrentItem(0);
     }
 }

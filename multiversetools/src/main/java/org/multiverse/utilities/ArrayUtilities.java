@@ -29,8 +29,9 @@ public class ArrayUtilities {
     }
 
     public static void displayArray(ArrayList<String> arrayList) {
+        System.out.println("[Neuron.MT.StringUtilities]: Displaying an arraylist...");
         for(String s : arrayList) {
-            System.out.println("s");
+            System.out.println("[Neuron]:   " + s);
         }
         System.out.println("");
     }

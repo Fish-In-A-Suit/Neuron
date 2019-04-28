@@ -246,6 +246,6 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
      * @param msg
      */
     public void displayMsg(int msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
