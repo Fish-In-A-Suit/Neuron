@@ -61,6 +61,14 @@ public class GeneralTools {
     }
 
     /**
+     * Stops the execution of the specified activity
+     * @param activity
+     */
+    public static void stopActivity(Activity activity) {
+        activity.finish();
+    }
+
+    /**
      * Launches the specified activity from the global context by setting FLAG_ACTIVITY_NEW_TASK to the
      * intent object. The context is queried by getApplicationContext()
      * @param context The global application context
@@ -201,6 +209,8 @@ public class GeneralTools {
      * @param colorId
      */
     public static void setViewBackgroundTint(Context c, View v, int colorId) {
+        System.out.println("#111: c = " + c + " | v = " + v + " | colorId = " + colorId);
+        System.out.println("#111 v background is: " + v.getBackground());
         DrawableCompat.setTint(v.getBackground(), ContextCompat.getColor(c, colorId));
     }
 
@@ -339,6 +349,5 @@ public class GeneralTools {
 
         return allFragments;
     }
-
 
 }

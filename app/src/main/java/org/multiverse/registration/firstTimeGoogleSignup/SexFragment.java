@@ -17,7 +17,10 @@ import android.widget.TextView;
 import org.multiverse.R;
 import org.multiverse.multiversetools.ButtonGroup;
 
-public class SexTab extends Fragment {
+/**
+ * This is the code responsible for representing the "sex fragment" during the additional user info collection for first-time users signing in with google.
+ */
+public class SexFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -28,7 +31,7 @@ public class SexTab extends Fragment {
 
     private ImageView sex_tick;
 
-    public SexTab() {
+    public SexFragment() {
         // Required empty public constructor
     }
 
@@ -82,19 +85,19 @@ public class SexTab extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("[Neuron.SexTab]: Pausing sex fragment!");
+        System.out.println("[Neuron.SexFragment]: Pausing sex fragment!");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        System.out.println("[Neuron.SexTab]: Sex fragment is stopped!");
+        System.out.println("[Neuron.SexFragment]: Sex fragment is stopped!");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("[Neuron.SexTab]: Sex fragment view destroyed.");
+        System.out.println("[Neuron.SexFragment]: Sex fragment view destroyed.");
     }
 
     /**

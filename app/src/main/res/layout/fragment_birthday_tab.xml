@@ -2,10 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/birthdayTab"
+    android:id="@+id/birthdayFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registration.firstTimeGoogleSignup.BirthdayTab">
+    tools:context=".registration.firstTimeGoogleSignup.BirthdayFragment">
 
 
     <TextView
@@ -102,7 +102,7 @@
         android:id="@+id/birthdayTab_tick"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"

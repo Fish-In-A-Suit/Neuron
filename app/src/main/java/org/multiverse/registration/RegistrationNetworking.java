@@ -9,11 +9,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.multiverse.database.DatabaseNetworking;
-import org.multiverse.multiversetools.GeneralTools;
-import org.tord.neuroncore.networking.UserUpdate;
 
 /**
  * This class provides functionality for registering a user to the server.
@@ -34,7 +31,7 @@ public class RegistrationNetworking {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     //DatabaseNetworking.addNewData(registeredUser);
-                    DatabaseNetworking.checkForEmailClashesAndSendToDatabase(registeredUser, currentActivty, targetActivityClass);
+                    DatabaseNetworking.checkForEmailAndUsernameClashesAndSendToDatabase(registeredUser, currentActivty, targetActivityClass);
                 } else {
                     try {
                         throw new FirebaseAuthInvalidCredentialsException("ERROR_CREDENTIAL_ALREADY_IN_USE", "[Neuron.registration.RegistrationNetworking.registerUser]: Invalid credentials");

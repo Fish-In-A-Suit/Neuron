@@ -1,5 +1,6 @@
 package org.multiverse.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -26,15 +27,17 @@ import org.multiverse.multiversetools.Padding;
 import org.multiverse.multiversetools.TabSwitcher;
 import org.multiverse.multiversetools.ViewTab;
 import org.multiverse.database.DatabaseUser;
-import org.multiverse.registration.firstTimeGoogleSignup.AfterGoogleSignUpManager;
+import org.multiverse.registration.firstTimeGoogleSignup.FTGSmanager;
 import org.multiverse.registration.RegisterActivity;
-import org.multiverse.registration.firstTimeGoogleSignup.BirthdayTab;
-import org.multiverse.registration.firstTimeGoogleSignup.SexTab;
-import org.multiverse.registration.firstTimeGoogleSignup.UsernameTab;
+import org.multiverse.registration.firstTimeGoogleSignup.BirthdayFragment;
+import org.multiverse.registration.firstTimeGoogleSignup.PasswordFragment;
+import org.multiverse.registration.firstTimeGoogleSignup.SexFragment;
+import org.multiverse.registration.firstTimeGoogleSignup.UsernameFragment;
+import org.tord.neuroncore.Constants;
 import org.tord.neuroncore.system.SystemUtilities;
 import java.util.List;
 
-public class LoginActivity extends FragmentActivity implements UsernameTab.OnFragmentInteractionListener, SexTab.OnFragmentInteractionListener, BirthdayTab.OnFragmentInteractionListener {
+public class LoginActivity extends FragmentActivity implements UsernameFragment.OnFragmentInteractionListener, PasswordFragment.OnFragmentInteractionListener, SexFragment.OnFragmentInteractionListener, BirthdayFragment.OnFragmentInteractionListener {
     private FirebaseAuth firebaseAuth;
 
     private Button loginButton;
@@ -44,8 +47,10 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
     private EditText email;
     private EditText password;
 
-    private ViewTab afterGoogleSignupTab;
-    private AfterGoogleSignUpManager afterGoogleSignUpManager;
+    private ViewTab FTGStab;
+    private FTGSmanager FTGSmanager;
+
+    private final Activity loginActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
 
         email = findViewById(R.id.login_email_field);
         password = findViewById(R.id.login_password_field);
+        loginButton = findViewById(R.id.login_loginbutton);
         googleSignInBtn = findViewById(R.id.login_google_sign_in_button);
 
         loginButton = findViewById(R.id.login_loginbutton);
@@ -84,7 +90,7 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
         configureGoogleButton();
 
         //configures the appearance of the viewpager which should pop up if the user is first time registering using google
-        configureViewTab((ViewPager) findViewById(R.id.login_after_google_signup_collection), (TabLayout) findViewById(R.id.login_tablayout));
+        configureViewTab((ViewPager) findViewById(R.id.login_FTGS_viewpager), (TabLayout) findViewById(R.id.login_FTGS_tablayout));
     }
 
     //on start is called after onCreate is completed
@@ -119,22 +125,30 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
         super.onActivityResult(requestCode, resultCode, data);
 
         System.out.println("[Neuron.Login.onActivityResult]: In onActivityResult");
+        System.out.println("[Neuron.Login.onActivityResult]: requestCode = " + requestCode + " | resultCode = " + resultCode);
 
-        DatabaseUser incompleteDatabaseUser = LoginNetworking.determineSignInSuccess(requestCode, data, LoginActivity.this, MainActivity.class, afterGoogleSignupTab);
-        System.out.println("[Neuron.Login.onActivityResult]: Displaying incompleteDatabaseUser");
-        incompleteDatabaseUser.display();
+        if(requestCode == Constants.RC_SIGN_IN_GOOGLE) {
+            DatabaseUser incompleteDatabaseUser = LoginNetworking.determineSignInSuccess(requestCode, data, LoginActivity.this, MainActivity.class, FTGStab);
+            System.out.println("[Neuron.Login.onActivityResult]: Displaying incompleteDatabaseUser");
+            incompleteDatabaseUser.display();
 
-        System.out.println("[Neuron.Login.onActivityResult]: Starting to query for individual fragments in login_viewPagerLayout");
-        List<Fragment> allFragments = GeneralTools.findFragmentsInViewPager(afterGoogleSignupTab.getViewPager());
+            System.out.println("[Neuron.Login.onActivityResult]: Starting to query for individual fragments in login_FTGS_viewPagerLayout");
+            List<Fragment> allFragments = GeneralTools.findFragmentsInViewPager(FTGStab.getViewPager());
 
-        UsernameTab usernameFragment = (UsernameTab) allFragments.get(0);
-        SexTab sexFragment = (SexTab) allFragments.get(1);
-        BirthdayTab birthdayFragment = (BirthdayTab) allFragments.get(2);
+            UsernameFragment usernameFragment = (UsernameFragment) allFragments.get(0);
+            PasswordFragment passwordFragment = (PasswordFragment) allFragments.get(1);
+            SexFragment sexFragment = (SexFragment) allFragments.get(2);
+            BirthdayFragment birthdayFragment = (BirthdayFragment) allFragments.get(3);
+            System.out.println("[Neuron.login.LoginActivity.onActivityResult]: #5");
 
-        afterGoogleSignUpManager = new AfterGoogleSignUpManager(this, this.getApplicationContext(), afterGoogleSignupTab, (UsernameTab) usernameFragment, (SexTab) sexFragment,
-                (BirthdayTab) birthdayFragment, incompleteDatabaseUser);
-        //start the signup manager
-        afterGoogleSignUpManager.start();
+            //TODO: START FROM HERE!!! SEND THE PASSWORD FRAGMENT TO AGSM AND THEN PROCESS THE PASSWORD AND SEND IT TO THE SERVER!!!
+            //TODO rename FTGSmanager to FTGSmanager
+            FTGSmanager = new FTGSmanager(this, this.getApplicationContext(), FTGStab, usernameFragment, passwordFragment, sexFragment,
+                    birthdayFragment, incompleteDatabaseUser);
+            //start the signup manager
+            FTGSmanager.start();
+        }
+
     }
 
     @Override
@@ -147,29 +161,29 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
         tl.setTabGravity(TabLayout.GRAVITY_FILL);
         GeneralTools.setTabLayoutMargins(tl, 0, 0, 20, 0);
 
-        afterGoogleSignupTab = new ViewTab(vp, tl);
-        afterGoogleSignupTab.setBackgroundLayout((View) findViewById(R.id.login_viewPagerLayout));
-        afterGoogleSignupTab.hide(); //hidden by default
-        LoginPagerAdapter lpa = new LoginPagerAdapter(getSupportFragmentManager(), afterGoogleSignupTab.getTabCount());
-        afterGoogleSignupTab.configureViewPager(lpa);
+        FTGStab = new ViewTab(vp, tl);
+        FTGStab.setBackgroundLayout((View) findViewById(R.id.login_FTGS_viewPagerLayout));
+        FTGStab.hide(); //hidden by default
+        LoginPagerAdapter lpa = new LoginPagerAdapter(getSupportFragmentManager(), FTGStab.getTabCount());
+        FTGStab.configureViewPager(lpa);
 
         //this makes the viewpager not dump the fragments when scrolling through them
-        GeneralTools.makeViewPagerNotForget(afterGoogleSignupTab.getViewPager());
+        GeneralTools.makeViewPagerNotForget(FTGStab.getViewPager());
 
         //this configures that the dot is displayed in the tablayout to indicate which tab the user is currently in
         final TabSwitcher tabSwitcher = new TabSwitcher(null);
 
-        TabLayout.Tab initialTab = afterGoogleSignupTab.getTabLayout().getTabAt(0);
+        TabLayout.Tab initialTab = FTGStab.getTabLayout().getTabAt(0);
         initialTab.setIcon(R.drawable.login_googleregister_tabitem_background_position); //set the position of the first tab
         tabSwitcher.setTab(initialTab);
 
-        afterGoogleSignupTab.getTabLayout().addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        FTGStab.getTabLayout().addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             //called each time a new tab is selected
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
                 System.out.println("[Neuron.LoginActivity]: Setting viewpager item to tab with position " + tab.getPosition());
-                afterGoogleSignupTab.getViewPager().setCurrentItem(tab.getPosition());
+                FTGStab.getViewPager().setCurrentItem(tab.getPosition());
 
                 if(null != tabSwitcher.getTab()) {
                     tabSwitcher.getTab().setIcon(R.drawable.login_googleregister_tabitem_background);
@@ -191,7 +205,7 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
             }
         });
 
-        afterGoogleSignupTab.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        FTGStab.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -200,9 +214,9 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
             //called each time a new page is selected by scrolling to it in viewpager
             @Override
             public void onPageSelected(int i) {
-                TabLayout.Tab currentTab = afterGoogleSignupTab.getTabLayout().getTabAt(i);
+                TabLayout.Tab currentTab = FTGStab.getTabLayout().getTabAt(i);
 
-                afterGoogleSignupTab.getViewPager().setCurrentItem(i);
+                FTGStab.getViewPager().setCurrentItem(i);
 
                 if(null != tabSwitcher.getTab()) {
                     tabSwitcher.getTab().setIcon(R.drawable.login_googleregister_tabitem_background);
@@ -229,6 +243,15 @@ public class LoginActivity extends FragmentActivity implements UsernameTab.OnFra
             public void onClick(View v) {
                 LoginNetworking.signUserInWithGoogle(LoginActivity.this.getBaseContext(), LoginActivity.this);
                 googleSignInBtn.setEnabled(false); //disables the google btn to prevent further clicks
+            }
+        });
+    }
+
+    private void configureLoginButton() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginNetworking.signUserIn(loginActivity, MainActivity.class, FirebaseAuth.getInstance(), email.getText().toString(), password.getText().toString());
             }
         });
     }

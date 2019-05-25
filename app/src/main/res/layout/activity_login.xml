@@ -205,7 +205,7 @@
         app:layout_constraintVertical_bias="0.25" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/login_viewPagerLayout"
+        android:id="@+id/login_FTGS_viewPagerLayout"
         android:layout_width="330dp"
         android:layout_height="310dp"
         android:layout_marginStart="16dp"
@@ -220,7 +220,7 @@
         app:layout_constraintVertical_bias="0.25">
 
         <android.support.design.widget.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/login_tablayout"
+            android:id="@+id/login_FTGS_tablayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
@@ -251,12 +251,18 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:icon="@drawable/login_googleregister_tabitem_background" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:icon="@drawable/login_googleregister_tabitem_background" />
         </android.support.design.widget.TabLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/login_after_google_signup_collection"
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:id="@+id/login_FTGS_viewpager"
+            android:layout_width="327dp"
+            android:layout_height="256dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

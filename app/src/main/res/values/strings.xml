@@ -2,15 +2,22 @@
     <string name="app_name">Multiverse</string>
     <string name="action_settings">Settings</string>
 
+    <string name="network_error">A network error occurred. Please, check your connection.</string>
+
     <string name="login_email_field_hint">example.example@gmail.com</string>
     <string name="login_password_field_hint">●●●●●●●</string>
     <string name="login_loginbutton_text">Sign in</string>
     <string name="login_registerbutton_text">REGISTER</string>
     <string name="login_googlebuttonlogin_text">GOOGLE</string>
     <string name="login_afterGoogleSignUp_username_greet_text">Please, specify your username.</string>
+    <string name="login_afterGoogleSignUp_password_greet_text">Please, specify your password.</string>
     <string name="login_afterGoogleSignUp_sex_greet_text">Please, specify your sex.</string>
     <string name="login_afterGoogleSignUp_birthday_greet_text">Please, specify your birthday.</string>
+    <string name="login_loginprocess_failed_invalid_user">Authentication failed. Invalid user.</string>
+    <string name="login_loginprocess_failed_invalid_password">Authentication failed. Invalid password.</string>
     <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="password_too_short">Password is too short!</string>
 
     <string name="register_register">REGISTER</string>
     <string name="register_first_name">FIRST NAME</string>

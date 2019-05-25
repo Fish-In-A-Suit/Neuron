@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,20 +19,26 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.Exclude;
 
 import org.multiverse.database.DatabaseUser;
 import org.multiverse.multiversetools.GeneralTools;
 import org.multiverse.multiversetools.ViewTab;
 import org.multiverse.registration.firstTimeGoogleSignup.GoogleSignUpAccountManager;
+import org.tord.neuroncore.Constants;
 import org.tord.neuroncore.R;
 
 public class LoginNetworking {
     private static GoogleApiClient googleApiClient;
-    private static int RC_SIGN_IN = 100; //can be any number
 
     /**
      * Attempts to sign in a user with the specified email and password. If the sign in is complete, activity specified by targetActivityClass is launched.
@@ -43,6 +50,7 @@ public class LoginNetworking {
      */
     public static void signUserIn(final Activity callingActivity, final Class targetActivityClass, FirebaseAuth fbAuth, final String email, final String password) {
         if(null != email && null != password && !email.equals("") && !password.equals("")) {
+
             fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(callingActivity, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -51,11 +59,59 @@ public class LoginNetworking {
                         GeneralTools.launchNewActivity(callingActivity.getBaseContext(), targetActivityClass);
                     } else {
                         System.out.println("[Neuron.NC.networking.LoginNetworking.signUserIn]: Sign in process for email '" + email + "' and password '" + password + "' FAILED.");
-                        Toast.makeText(callingActivity, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        //todo: better inform the user about what went wrong
+                        //Toast.makeText(callingActivity, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                        Exception e = task.getException();
+
+                        //todo: localize these messages!
+                        if(e instanceof FirebaseAuthInvalidUserException) {
+                            //Toast.makeText(callingActivity, R.string.login_loginprocess_failed_invalid_user, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            //Toast.makeText(callingActivity, R.string.login_loginprocess_failed_invalid_password, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof FirebaseNetworkException) {
+                            //Toast.makeText(callingActivity, R.string.network_error, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof Exception) {
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        }
                     }
                 }
             });
+
+            /*
+            System.out.println("[Neuron.NC.networking.LoginNetworking.signUserIn]: Building an email credential for " + email);
+            EmailAuthCredential emailCredential = (EmailAuthCredential) EmailAuthProvider.getCredential(email, password);
+            fbAuth.signInWithCredential(emailCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()) {
+                        System.out.println("[Neuron.NC.networking.LoginNetworking.signUserIn]: Sign in process for email '" + email + "' and password '" + password + "' is successful.");
+                        GeneralTools.launchNewActivity(callingActivity.getBaseContext(), targetActivityClass);
+                    } else {
+                        System.out.println("[Neuron.NC.networking.LoginNetworking.signUserIn]: Sign in process for email '" + email + "' and password '" + password + "' FAILED.");
+                        //Toast.makeText(callingActivity, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                        Exception e = task.getException();
+
+                        //todo: localize these messages! better inform the user about the errors
+                        if(e instanceof FirebaseAuthInvalidUserException) {
+                            //Toast.makeText(callingActivity, R.string.login_loginprocess_failed_invalid_user, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            //Toast.makeText(callingActivity, R.string.login_loginprocess_failed_invalid_password, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof FirebaseNetworkException) {
+                            //Toast.makeText(callingActivity, R.string.network_error, Toast.LENGTH_LONG).show();
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        } else if (e instanceof Exception) {
+                            System.out.println("[Neuron.login.LoginNetworking.signUserIn]: Exception during sign in occurred: " + e.getMessage());
+                        }
+                    }
+                }
+            });
+            */
         } else {
             System.out.println("[Neuron.NC.networking.LoginNetworking.signUserIn]: Can't sign the user in! Email or password isn't specified!");
             //todo: notify the user that he has to specify email or password... return an ErrorSet instance which contains all of the errors thrown to the calling activity???
@@ -87,7 +143,7 @@ public class LoginNetworking {
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
 
-        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
+        activity.startActivityForResult(signInIntent, Constants.RC_SIGN_IN_GOOGLE);
     }
 
     /**
@@ -101,7 +157,8 @@ public class LoginNetworking {
      */
     public static void determineSignInSuccess(int requestCode, Intent data, Activity sourceActivity, Class targetActivityClass) {
         //check which request we're responding to
-        if (requestCode == RC_SIGN_IN) {
+        //todo: THIS MIGHT BE NULL IF RC_SIGN_IN_GOOGLE IS FALSE, TRY RC_SIGN_IN_REGULAR
+        if (requestCode == Constants.RC_SIGN_IN_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
             if(result.isSuccess()) {
@@ -152,7 +209,8 @@ public class LoginNetworking {
      */
     public static DatabaseUser determineSignInSuccess(int requestCode, Intent data, final Activity sourceActivity, final Class targetActivityClass, final ViewTab viewTab) {
         //check which request we're responding to
-        if (requestCode == RC_SIGN_IN) {
+        //todo: THIS MIGHT BE NULL IF RC_SIGN_IN_GOOGLE IS FALSE, TRY RC_SIGN_IN_REGULAR
+        if (requestCode == Constants.RC_SIGN_IN_GOOGLE) {
             System.out.println("[Neuron.login.LoginNetworking.determineSignInSuccess]: The request code matches the RC_SIGN_IN code.");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
@@ -189,7 +247,7 @@ public class LoginNetworking {
 
     /**
      * This method attempts to authenticate a google-sign-in user to firebase. If the user is a new user (hasn't logged in with google before), then the
-     * specified ViewTab is shown (ie the login_after_google_signup_collection), which makes the user specify further data about their account. If the user
+     * specified ViewTab is shown (ie the login_FTGS_viewpager), which makes the user specify further data about their account. If the user
      * has already logged in with google before, then this method automatically proceeds to the activity specified by targetActivityClass
      * @param account
      * @param sourceActivity

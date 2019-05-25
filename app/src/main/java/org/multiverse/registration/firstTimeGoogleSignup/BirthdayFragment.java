@@ -18,8 +18,10 @@ import org.multiverse.multiversetools.valuekeepers.IntKeeper;
 import org.multiverse.multiversetools.alternative.SpinnerWithTitle;
 import org.tord.neuroncore.registration.Birthday;
 
-
-public class BirthdayTab extends Fragment {
+/**
+ * This is the code responsible for the "birthday fragment" during the additional user info collection for first-time users signing in with google.
+ */
+public class BirthdayFragment extends Fragment {
     private SpinnerWithTitle month;
     private SpinnerWithTitle day;
     private SpinnerWithTitle year;
@@ -29,7 +31,7 @@ public class BirthdayTab extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public BirthdayTab() {
+    public BirthdayFragment() {
         // Required empty public constructor
     }
 
@@ -72,12 +74,12 @@ public class BirthdayTab extends Fragment {
         //this adapter will be used to set the truncated month names in the month spinner with the specified layout.
         //truncatedMonths = new ArrayAdapter<CharSequence>(this.getContext(), R.layout.spinner_item_birthday_tab, (int) R.array.truncated_months);
 
-        System.out.println("[Neuron.BirthdayTab.onViewCreated]: Finding month, day and year spinners!");
+        System.out.println("[Neuron.BirthdayFragment.onViewCreated]: Finding month, day and year spinners!");
         month = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_month);
         day = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_day);
         year = (SpinnerWithTitle) view.findViewById(R.id.birthdayTab_year);
 
-        System.out.println("[Neuron.BirthdayTab.onViewCreated]: month id: " + month + " | day id: " + day + " | year id: " + year);
+        System.out.println("[Neuron.BirthdayFragment.onViewCreated]: month id: " + month + " | day id: " + day + " | year id: " + year);
 
         if(null!=month && null!=day && null!=year) {
             populateSpinners();
@@ -88,25 +90,25 @@ public class BirthdayTab extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("[Neuron.BirthdayTab]: Birthday fragment paused.");
+        System.out.println("[Neuron.BirthdayFragment]: Birthday fragment paused.");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        System.out.println("[Neuron.BirthdayTab]: Birthday fragment stopped.");
+        System.out.println("[Neuron.BirthdayFragment]: Birthday fragment stopped.");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("[Neuron.BirthdayTab]: Birthday fragment view destroyed.");
+        System.out.println("[Neuron.BirthdayFragment]: Birthday fragment view destroyed.");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        System.out.println("[Neuron.BirthdayTab]: Birthday fragment destroyed.");
+        System.out.println("[Neuron.BirthdayFragment]: Birthday fragment destroyed.");
     }
 
     /**
@@ -125,7 +127,7 @@ public class BirthdayTab extends Fragment {
     }
 
     private void populateSpinners() {
-        System.out.println("[Neuron.BirthdayTab.populateSpinners]: Populating spinners.");
+        System.out.println("[Neuron.BirthdayFragment.populateSpinners]: Populating spinners.");
         month.setTitle("Month");
         //todo: change this layout to change how the selected spinner item is displayed
         month.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab);
@@ -141,23 +143,23 @@ public class BirthdayTab extends Fragment {
     }
 
     private void configureSpinners() {
-        System.out.println("[Neuron.BirthdayTab.configureSpinners]: Configuring spinners");
+        System.out.println("[Neuron.BirthdayFragment.configureSpinners]: Configuring spinners");
 
         //first, wait for the first selection. Then, when the first item is selected, restrict the month spinner textview to max 3 characters and remove the listener.
         final IntKeeper restriction = new IntKeeper(0);
         month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("[Neuron.BirthdayTab.configureSpinners]: Item with id " + id + " selected.");
+                System.out.println("[Neuron.BirthdayFragment.configureSpinners]: Item with id " + id + " selected.");
                 if(restriction.getValue() == 0) {
-                    System.out.println("[Neuron.BirthdayTab.configureSpiners]: Changing the month spinner to only display three characters!");
+                    System.out.println("[Neuron.BirthdayFragment.configureSpiners]: Changing the month spinner to only display three characters!");
                     //if this is the first item selected, add a max length to the textview instance of the month spinner and then delete the listener
                     month.setSpinnerItemLayoutId(R.layout.spinner_item_birthday_tab_shortened);
                     month.refresh(getContext());
                     month.setOnItemSelectedListener(null);
                     restriction.setValue(restriction.getValue()+1);
                 } else {
-                    System.out.println("[Neuron.BirthdayTab.configureSpiners]: aaaaaa!");
+                    System.out.println("[Neuron.BirthdayFragment.configureSpiners]: aaaaaa!");
                 }
 
             }

@@ -14,43 +14,49 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.multiverse.R;
-import org.w3c.dom.Text;
 
-public class UsernameTab extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link PasswordFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ */
+public class PasswordFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private EditText usernameText;
-    private TextView error;
-    private Button username_register;
-    private ImageView username_tick;
 
-    public UsernameTab() {
+    private ImageView tick;
+    private EditText passwordField;
+    private TextView errorText;
+    private Button register;
+
+    public PasswordFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_username_tab, container, false);
+        System.out.println("[Neuron.registration.FTGSmanager.PasswordFragment.onCreateView]: Creating the password tab!");
+        //inflate layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_password_tab, container, false);
+        return v;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        System.out.println("[Neuron.UsernameTab.onViewCreated]: Defining the username edit text and error text view for tab " + this);
-        usernameText = (EditText) getView().findViewById(R.id.usernameTab_username);
-        error = (TextView) getView().findViewById(R.id.usernameTab_error);
-        username_register = (Button) getView().findViewById(R.id.usernameTab_register);
-        username_tick = (ImageView) getView().findViewById(R.id.usernameTab_tick);
-        username_tick.setVisibility(View.INVISIBLE);
+        tick = (ImageView) getView().findViewById(R.id.passwordTab_tick);
+        tick.setVisibility(View.INVISIBLE);
 
-        System.out.println("[Neuron.UsernameTab.onViewCreated]: usernameText = " + usernameText + " | username error reporting view = " + error);
+        passwordField = (EditText) getView().findViewById(R.id.passwordTab_passwordField);
+        errorText = (TextView) getView().findViewById(R.id.passwordTab_error);
+        errorText.setTextColor(getResources().getColor(R.color.error));
+        register = (Button) getView().findViewById(R.id.passwordTab_register);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,24 +83,6 @@ public class UsernameTab extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        System.out.println("[Neuron.UsernameTab]: Username fragment is paused.");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        System.out.println("[Neuron.UsernameTab]: Username fragment is stopped.");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println("[Neuron.UsernameTab]: Username fragment view destroyed.");
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -110,19 +98,15 @@ public class UsernameTab extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public EditText getPasswordField() {
+        return passwordField;
+    }
+
+    public TextView getErrorText() {
+        return errorText;
+    }
+
     public ImageView getTickView() {
-        return username_tick;
-    }
-
-    public EditText getUsernameEditText() {
-        return usernameText;
-    }
-
-    public TextView getErrorTextView() {
-        return error;
-    }
-
-    public Button getRegisterButton() {
-        return username_register;
+        return tick;
     }
 }

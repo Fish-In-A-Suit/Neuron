@@ -15,6 +15,7 @@ public class DatabaseUser implements Networkable {
     private String username;
     private String fullName;
     private String email;
+    private String password;
     private String sex;
     private String birthday;
 
@@ -62,6 +63,14 @@ public class DatabaseUser implements Networkable {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {

@@ -17,4 +17,7 @@ public class Constants {
     public static int LOGIN_BIRTHDAY_TAB_MONTH_SPINNER_MAX_LENGTH = 3;
 
     public static int AFTERGOOGLESIGNUP_MAXIMUM_TAB_SWITCHES_DEFAULT = 2;
+
+    //public static int RC_SIGN_IN_REGULAR = 100; //used during the sign-in process with email and password
+    public static int RC_SIGN_IN_GOOGLE = 101; //used during the sign-in process with google account
 }
